@@ -373,7 +373,7 @@ function Step3({ data, onBack, onNext }: { data: WizardData; onBack: () => void;
       <h2 className="font-bold text-2xl" style={{ fontFamily: "var(--font-display)" }}>Datos de tu empresa</h2>
       <p className="text-text-muted text-sm mt-1">Para encontrar las convocatorias que aplican a tu caso específico.</p>
 
-      <form onSubmit={handleSubmit(onNext)} className="mt-6 space-y-4">
+      <form onSubmit={handleSubmit((d) => onNext(d as Step3Data))} className="mt-6 space-y-4">
         <div>
           <label className="text-sm font-medium">{isAutonomo ? "Nombre / actividad" : "Nombre de la empresa"}</label>
           <input {...register("nombre")} className="input-notary" placeholder={isAutonomo ? "Ej: María González — Diseño gráfico" : "Ej: Talleres Martínez S.L."} />

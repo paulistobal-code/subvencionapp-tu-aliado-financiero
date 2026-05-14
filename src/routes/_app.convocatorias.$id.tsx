@@ -1,12 +1,22 @@
-import { createFileRoute, Link, useParams } from "@tanstack/react-router";
+import { createFileRoute, Link, useParams, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { ensureBorrador } from "@/lib/borrador.functions";
+import { usePlan } from "@/hooks/usePlan";
 
 export const Route = createFileRoute("/_app/convocatorias/$id")({ component: GrantDetail });
 
 function GrantDetail() {
   const { id } = useParams({ from: "/_app/convocatorias/$id" });
+  const navigate = useNavigate();
+  const plan = usePlan();
+  const ensure = useServerFn(ensureBorrador);
+  const [creating, setCreating] = useState(false);
+
   const { data, isLoading } = useQuery({
     queryKey: ["convocatoria", id],
     queryFn: async () => {
@@ -14,6 +24,23 @@ function GrantDetail() {
       return data;
     },
   });
+
+  async function empezarMemoria() {
+    if (!plan.canUseAIWriter) {
+      toast.error("La memoria técnica con IA requiere el plan Pro.");
+      navigate({ to: "/precios" });
+      return;
+    }
+    setCreating(true);
+    try {
+      const { id: borrId } = await ensure({ data: { convocatoria_id: id } });
+      navigate({ to: "/solicitud/$id", params: { id: borrId } });
+    } catch (e) {
+      toast.error((e as Error).message);
+    } finally {
+      setCreating(false);
+    }
+  }
 
   if (isLoading) return <div className="max-w-3xl mx-auto"><div className="h-10 w-2/3 bg-recessed animate-pulse rounded mb-4" /></div>;
   if (!data) return <div className="max-w-3xl mx-auto">No encontrada.</div>;
@@ -53,9 +80,14 @@ function GrantDetail() {
       )}
 
       <div className="mt-8 flex flex-wrap gap-3">
-        <Link to="/solicitudes" className="bg-gold text-obsidian font-semibold px-6 py-3 rounded-md shadow-gold hover:bg-gold-muted hover:text-white transition-colors">
+        <button
+          onClick={empezarMemoria}
+          disabled={creating}
+          className="bg-gold text-obsidian font-semibold px-6 py-3 rounded-md shadow-gold hover:bg-gold-muted hover:text-white transition-colors disabled:opacity-60 inline-flex items-center gap-2"
+        >
+          {creating && <Loader2 size={14} className="animate-spin" />}
           Empezar memoria técnica con IA →
-        </Link>
+        </button>
         {data.url_convocatoria && (
           <a href={data.url_convocatoria} target="_blank" rel="noopener" className="border border-border-mid px-6 py-3 rounded-md hover:bg-recessed">
             Ver convocatoria oficial ↗

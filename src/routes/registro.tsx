@@ -356,8 +356,8 @@ const step3Schema = z.object({
 type Step3Data = z.infer<typeof step3Schema>;
 
 function Step3({ data, onBack, onNext }: { data: WizardData; onBack: () => void; onNext: (d: Step3Data) => void }) {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<Step3Data>({
-    resolver: zodResolver(step3Schema),
+  const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    resolver: zodResolver(step3Schema) as never,
     defaultValues: {
       nombre: data.nombre, nif: data.nif, cnae: data.cnae,
       comunidad: data.comunidad, municipio: data.municipio,
@@ -373,7 +373,7 @@ function Step3({ data, onBack, onNext }: { data: WizardData; onBack: () => void;
       <h2 className="font-bold text-2xl" style={{ fontFamily: "var(--font-display)" }}>Datos de tu empresa</h2>
       <p className="text-text-muted text-sm mt-1">Para encontrar las convocatorias que aplican a tu caso específico.</p>
 
-      <form onSubmit={handleSubmit(onNext)} className="mt-6 space-y-4">
+      <form onSubmit={handleSubmit((d) => onNext(d as Step3Data))} className="mt-6 space-y-4">
         <div>
           <label className="text-sm font-medium">{isAutonomo ? "Nombre / actividad" : "Nombre de la empresa"}</label>
           <input {...register("nombre")} className="input-notary" placeholder={isAutonomo ? "Ej: María González — Diseño gráfico" : "Ej: Talleres Martínez S.L."} />

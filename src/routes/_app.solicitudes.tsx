@@ -35,7 +35,8 @@ function SolicitudesPage() {
         <div className="mt-6 grid gap-3">
           {data.map((b) => {
             const conv = b.convocatorias as { titulo?: string; organismo?: string; fecha_fin?: string | null } | null;
-            const pct = Math.round((b.secciones_completadas / 8) * 100);
+            const completadas = b.secciones_completadas ?? 0;
+            const pct = Math.round((completadas / 8) * 100);
             return (
               <Link
                 key={b.id}

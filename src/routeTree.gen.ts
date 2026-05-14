@@ -23,6 +23,9 @@ import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
 import { Route as AppCuentaRouteImport } from './routes/_app.cuenta'
 import { Route as AppClientesRouteImport } from './routes/_app.clientes'
 import { Route as AppAlertasRouteImport } from './routes/_app.alertas'
+import { Route as ApiMemoriaGenerarRouteImport } from './routes/api/memoria.generar'
+import { Route as ApiMemoriaCumplimientoRouteImport } from './routes/api/memoria.cumplimiento'
+import { Route as ApiExportTipoRouteImport } from './routes/api/export.$tipo'
 import { Route as AppConvocatoriasIdRouteImport } from './routes/_app.convocatorias.$id'
 
 const RegistroRoute = RegistroRouteImport.update({
@@ -94,6 +97,21 @@ const AppAlertasRoute = AppAlertasRouteImport.update({
   path: '/alertas',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiMemoriaGenerarRoute = ApiMemoriaGenerarRouteImport.update({
+  id: '/api/memoria/generar',
+  path: '/api/memoria/generar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiMemoriaCumplimientoRoute = ApiMemoriaCumplimientoRouteImport.update({
+  id: '/api/memoria/cumplimiento',
+  path: '/api/memoria/cumplimiento',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiExportTipoRoute = ApiExportTipoRouteImport.update({
+  id: '/api/export/$tipo',
+  path: '/api/export/$tipo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppConvocatoriasIdRoute = AppConvocatoriasIdRouteImport.update({
   id: '/convocatorias/$id',
   path: '/convocatorias/$id',
@@ -115,6 +133,9 @@ export interface FileRoutesByFullPath {
   '/guardadas': typeof AppGuardadasRoute
   '/solicitudes': typeof AppSolicitudesRoute
   '/convocatorias/$id': typeof AppConvocatoriasIdRoute
+  '/api/export/$tipo': typeof ApiExportTipoRoute
+  '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
+  '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -131,6 +152,9 @@ export interface FileRoutesByTo {
   '/guardadas': typeof AppGuardadasRoute
   '/solicitudes': typeof AppSolicitudesRoute
   '/convocatorias/$id': typeof AppConvocatoriasIdRoute
+  '/api/export/$tipo': typeof ApiExportTipoRoute
+  '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
+  '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -149,6 +173,9 @@ export interface FileRoutesById {
   '/_app/guardadas': typeof AppGuardadasRoute
   '/_app/solicitudes': typeof AppSolicitudesRoute
   '/_app/convocatorias/$id': typeof AppConvocatoriasIdRoute
+  '/api/export/$tipo': typeof ApiExportTipoRoute
+  '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
+  '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -167,6 +194,9 @@ export interface FileRouteTypes {
     | '/guardadas'
     | '/solicitudes'
     | '/convocatorias/$id'
+    | '/api/export/$tipo'
+    | '/api/memoria/cumplimiento'
+    | '/api/memoria/generar'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -183,6 +213,9 @@ export interface FileRouteTypes {
     | '/guardadas'
     | '/solicitudes'
     | '/convocatorias/$id'
+    | '/api/export/$tipo'
+    | '/api/memoria/cumplimiento'
+    | '/api/memoria/generar'
   id:
     | '__root__'
     | '/'
@@ -200,6 +233,9 @@ export interface FileRouteTypes {
     | '/_app/guardadas'
     | '/_app/solicitudes'
     | '/_app/convocatorias/$id'
+    | '/api/export/$tipo'
+    | '/api/memoria/cumplimiento'
+    | '/api/memoria/generar'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -211,6 +247,9 @@ export interface RootRouteChildren {
   PreciosRoute: typeof PreciosRoute
   PrivacidadRoute: typeof PrivacidadRoute
   RegistroRoute: typeof RegistroRoute
+  ApiExportTipoRoute: typeof ApiExportTipoRoute
+  ApiMemoriaCumplimientoRoute: typeof ApiMemoriaCumplimientoRoute
+  ApiMemoriaGenerarRoute: typeof ApiMemoriaGenerarRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -313,6 +352,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAlertasRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/memoria/generar': {
+      id: '/api/memoria/generar'
+      path: '/api/memoria/generar'
+      fullPath: '/api/memoria/generar'
+      preLoaderRoute: typeof ApiMemoriaGenerarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/memoria/cumplimiento': {
+      id: '/api/memoria/cumplimiento'
+      path: '/api/memoria/cumplimiento'
+      fullPath: '/api/memoria/cumplimiento'
+      preLoaderRoute: typeof ApiMemoriaCumplimientoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/export/$tipo': {
+      id: '/api/export/$tipo'
+      path: '/api/export/$tipo'
+      fullPath: '/api/export/$tipo'
+      preLoaderRoute: typeof ApiExportTipoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app/convocatorias/$id': {
       id: '/_app/convocatorias/$id'
       path: '/convocatorias/$id'
@@ -354,6 +414,9 @@ const rootRouteChildren: RootRouteChildren = {
   PreciosRoute: PreciosRoute,
   PrivacidadRoute: PrivacidadRoute,
   RegistroRoute: RegistroRoute,
+  ApiExportTipoRoute: ApiExportTipoRoute,
+  ApiMemoriaCumplimientoRoute: ApiMemoriaCumplimientoRoute,
+  ApiMemoriaGenerarRoute: ApiMemoriaGenerarRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

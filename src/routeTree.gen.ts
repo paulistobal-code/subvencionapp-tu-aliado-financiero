@@ -9,38 +9,261 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegistroRouteImport } from './routes/registro'
+import { Route as PrivacidadRouteImport } from './routes/privacidad'
+import { Route as PreciosRouteImport } from './routes/precios'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as CookiesRouteImport } from './routes/cookies'
+import { Route as AvisoLegalRouteImport } from './routes/aviso-legal'
+import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppSolicitudesRouteImport } from './routes/_app.solicitudes'
+import { Route as AppGuardadasRouteImport } from './routes/_app.guardadas'
+import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
+import { Route as AppCuentaRouteImport } from './routes/_app.cuenta'
+import { Route as AppClientesRouteImport } from './routes/_app.clientes'
+import { Route as AppAlertasRouteImport } from './routes/_app.alertas'
+import { Route as AppConvocatoriasIdRouteImport } from './routes/_app.convocatorias.$id'
 
+const RegistroRoute = RegistroRouteImport.update({
+  id: '/registro',
+  path: '/registro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacidadRoute = PrivacidadRouteImport.update({
+  id: '/privacidad',
+  path: '/privacidad',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PreciosRoute = PreciosRouteImport.update({
+  id: '/precios',
+  path: '/precios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AvisoLegalRoute = AvisoLegalRouteImport.update({
+  id: '/aviso-legal',
+  path: '/aviso-legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppSolicitudesRoute = AppSolicitudesRouteImport.update({
+  id: '/solicitudes',
+  path: '/solicitudes',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGuardadasRoute = AppGuardadasRouteImport.update({
+  id: '/guardadas',
+  path: '/guardadas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCuentaRoute = AppCuentaRouteImport.update({
+  id: '/cuenta',
+  path: '/cuenta',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppClientesRoute = AppClientesRouteImport.update({
+  id: '/clientes',
+  path: '/clientes',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAlertasRoute = AppAlertasRouteImport.update({
+  id: '/alertas',
+  path: '/alertas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppConvocatoriasIdRoute = AppConvocatoriasIdRouteImport.update({
+  id: '/convocatorias/$id',
+  path: '/convocatorias/$id',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aviso-legal': typeof AvisoLegalRoute
+  '/cookies': typeof CookiesRoute
+  '/login': typeof LoginRoute
+  '/precios': typeof PreciosRoute
+  '/privacidad': typeof PrivacidadRoute
+  '/registro': typeof RegistroRoute
+  '/alertas': typeof AppAlertasRoute
+  '/clientes': typeof AppClientesRoute
+  '/cuenta': typeof AppCuentaRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/guardadas': typeof AppGuardadasRoute
+  '/solicitudes': typeof AppSolicitudesRoute
+  '/convocatorias/$id': typeof AppConvocatoriasIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aviso-legal': typeof AvisoLegalRoute
+  '/cookies': typeof CookiesRoute
+  '/login': typeof LoginRoute
+  '/precios': typeof PreciosRoute
+  '/privacidad': typeof PrivacidadRoute
+  '/registro': typeof RegistroRoute
+  '/alertas': typeof AppAlertasRoute
+  '/clientes': typeof AppClientesRoute
+  '/cuenta': typeof AppCuentaRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/guardadas': typeof AppGuardadasRoute
+  '/solicitudes': typeof AppSolicitudesRoute
+  '/convocatorias/$id': typeof AppConvocatoriasIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/aviso-legal': typeof AvisoLegalRoute
+  '/cookies': typeof CookiesRoute
+  '/login': typeof LoginRoute
+  '/precios': typeof PreciosRoute
+  '/privacidad': typeof PrivacidadRoute
+  '/registro': typeof RegistroRoute
+  '/_app/alertas': typeof AppAlertasRoute
+  '/_app/clientes': typeof AppClientesRoute
+  '/_app/cuenta': typeof AppCuentaRoute
+  '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/guardadas': typeof AppGuardadasRoute
+  '/_app/solicitudes': typeof AppSolicitudesRoute
+  '/_app/convocatorias/$id': typeof AppConvocatoriasIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/aviso-legal'
+    | '/cookies'
+    | '/login'
+    | '/precios'
+    | '/privacidad'
+    | '/registro'
+    | '/alertas'
+    | '/clientes'
+    | '/cuenta'
+    | '/dashboard'
+    | '/guardadas'
+    | '/solicitudes'
+    | '/convocatorias/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/aviso-legal'
+    | '/cookies'
+    | '/login'
+    | '/precios'
+    | '/privacidad'
+    | '/registro'
+    | '/alertas'
+    | '/clientes'
+    | '/cuenta'
+    | '/dashboard'
+    | '/guardadas'
+    | '/solicitudes'
+    | '/convocatorias/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/aviso-legal'
+    | '/cookies'
+    | '/login'
+    | '/precios'
+    | '/privacidad'
+    | '/registro'
+    | '/_app/alertas'
+    | '/_app/clientes'
+    | '/_app/cuenta'
+    | '/_app/dashboard'
+    | '/_app/guardadas'
+    | '/_app/solicitudes'
+    | '/_app/convocatorias/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  AvisoLegalRoute: typeof AvisoLegalRoute
+  CookiesRoute: typeof CookiesRoute
+  LoginRoute: typeof LoginRoute
+  PreciosRoute: typeof PreciosRoute
+  PrivacidadRoute: typeof PrivacidadRoute
+  RegistroRoute: typeof RegistroRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/registro': {
+      id: '/registro'
+      path: '/registro'
+      fullPath: '/registro'
+      preLoaderRoute: typeof RegistroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacidad': {
+      id: '/privacidad'
+      path: '/privacidad'
+      fullPath: '/privacidad'
+      preLoaderRoute: typeof PrivacidadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/precios': {
+      id: '/precios'
+      path: '/precios'
+      fullPath: '/precios'
+      preLoaderRoute: typeof PreciosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aviso-legal': {
+      id: '/aviso-legal'
+      path: '/aviso-legal'
+      fullPath: '/aviso-legal'
+      preLoaderRoute: typeof AvisoLegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +271,100 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/solicitudes': {
+      id: '/_app/solicitudes'
+      path: '/solicitudes'
+      fullPath: '/solicitudes'
+      preLoaderRoute: typeof AppSolicitudesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/guardadas': {
+      id: '/_app/guardadas'
+      path: '/guardadas'
+      fullPath: '/guardadas'
+      preLoaderRoute: typeof AppGuardadasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/cuenta': {
+      id: '/_app/cuenta'
+      path: '/cuenta'
+      fullPath: '/cuenta'
+      preLoaderRoute: typeof AppCuentaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/clientes': {
+      id: '/_app/clientes'
+      path: '/clientes'
+      fullPath: '/clientes'
+      preLoaderRoute: typeof AppClientesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/alertas': {
+      id: '/_app/alertas'
+      path: '/alertas'
+      fullPath: '/alertas'
+      preLoaderRoute: typeof AppAlertasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/convocatorias/$id': {
+      id: '/_app/convocatorias/$id'
+      path: '/convocatorias/$id'
+      fullPath: '/convocatorias/$id'
+      preLoaderRoute: typeof AppConvocatoriasIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAlertasRoute: typeof AppAlertasRoute
+  AppClientesRoute: typeof AppClientesRoute
+  AppCuentaRoute: typeof AppCuentaRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppGuardadasRoute: typeof AppGuardadasRoute
+  AppSolicitudesRoute: typeof AppSolicitudesRoute
+  AppConvocatoriasIdRoute: typeof AppConvocatoriasIdRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAlertasRoute: AppAlertasRoute,
+  AppClientesRoute: AppClientesRoute,
+  AppCuentaRoute: AppCuentaRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppGuardadasRoute: AppGuardadasRoute,
+  AppSolicitudesRoute: AppSolicitudesRoute,
+  AppConvocatoriasIdRoute: AppConvocatoriasIdRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  AvisoLegalRoute: AvisoLegalRoute,
+  CookiesRoute: CookiesRoute,
+  LoginRoute: LoginRoute,
+  PreciosRoute: PreciosRoute,
+  PrivacidadRoute: PrivacidadRoute,
+  RegistroRoute: RegistroRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

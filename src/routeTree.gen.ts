@@ -26,6 +26,7 @@ import { Route as AppAlertasRouteImport } from './routes/_app.alertas'
 import { Route as ApiMemoriaGenerarRouteImport } from './routes/api/memoria.generar'
 import { Route as ApiMemoriaCumplimientoRouteImport } from './routes/api/memoria.cumplimiento'
 import { Route as ApiExportTipoRouteImport } from './routes/api/export.$tipo'
+import { Route as AppSolicitudIdRouteImport } from './routes/_app.solicitud.$id'
 import { Route as AppConvocatoriasIdRouteImport } from './routes/_app.convocatorias.$id'
 
 const RegistroRoute = RegistroRouteImport.update({
@@ -112,6 +113,11 @@ const ApiExportTipoRoute = ApiExportTipoRouteImport.update({
   path: '/api/export/$tipo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppSolicitudIdRoute = AppSolicitudIdRouteImport.update({
+  id: '/solicitud/$id',
+  path: '/solicitud/$id',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppConvocatoriasIdRoute = AppConvocatoriasIdRouteImport.update({
   id: '/convocatorias/$id',
   path: '/convocatorias/$id',
@@ -133,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/guardadas': typeof AppGuardadasRoute
   '/solicitudes': typeof AppSolicitudesRoute
   '/convocatorias/$id': typeof AppConvocatoriasIdRoute
+  '/solicitud/$id': typeof AppSolicitudIdRoute
   '/api/export/$tipo': typeof ApiExportTipoRoute
   '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
   '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
@@ -152,6 +159,7 @@ export interface FileRoutesByTo {
   '/guardadas': typeof AppGuardadasRoute
   '/solicitudes': typeof AppSolicitudesRoute
   '/convocatorias/$id': typeof AppConvocatoriasIdRoute
+  '/solicitud/$id': typeof AppSolicitudIdRoute
   '/api/export/$tipo': typeof ApiExportTipoRoute
   '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
   '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
@@ -173,6 +181,7 @@ export interface FileRoutesById {
   '/_app/guardadas': typeof AppGuardadasRoute
   '/_app/solicitudes': typeof AppSolicitudesRoute
   '/_app/convocatorias/$id': typeof AppConvocatoriasIdRoute
+  '/_app/solicitud/$id': typeof AppSolicitudIdRoute
   '/api/export/$tipo': typeof ApiExportTipoRoute
   '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
   '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
@@ -194,6 +203,7 @@ export interface FileRouteTypes {
     | '/guardadas'
     | '/solicitudes'
     | '/convocatorias/$id'
+    | '/solicitud/$id'
     | '/api/export/$tipo'
     | '/api/memoria/cumplimiento'
     | '/api/memoria/generar'
@@ -213,6 +223,7 @@ export interface FileRouteTypes {
     | '/guardadas'
     | '/solicitudes'
     | '/convocatorias/$id'
+    | '/solicitud/$id'
     | '/api/export/$tipo'
     | '/api/memoria/cumplimiento'
     | '/api/memoria/generar'
@@ -233,6 +244,7 @@ export interface FileRouteTypes {
     | '/_app/guardadas'
     | '/_app/solicitudes'
     | '/_app/convocatorias/$id'
+    | '/_app/solicitud/$id'
     | '/api/export/$tipo'
     | '/api/memoria/cumplimiento'
     | '/api/memoria/generar'
@@ -373,6 +385,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiExportTipoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/solicitud/$id': {
+      id: '/_app/solicitud/$id'
+      path: '/solicitud/$id'
+      fullPath: '/solicitud/$id'
+      preLoaderRoute: typeof AppSolicitudIdRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/convocatorias/$id': {
       id: '/_app/convocatorias/$id'
       path: '/convocatorias/$id'
@@ -391,6 +410,7 @@ interface AppRouteChildren {
   AppGuardadasRoute: typeof AppGuardadasRoute
   AppSolicitudesRoute: typeof AppSolicitudesRoute
   AppConvocatoriasIdRoute: typeof AppConvocatoriasIdRoute
+  AppSolicitudIdRoute: typeof AppSolicitudIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -401,6 +421,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppGuardadasRoute: AppGuardadasRoute,
   AppSolicitudesRoute: AppSolicitudesRoute,
   AppConvocatoriasIdRoute: AppConvocatoriasIdRoute,
+  AppSolicitudIdRoute: AppSolicitudIdRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)

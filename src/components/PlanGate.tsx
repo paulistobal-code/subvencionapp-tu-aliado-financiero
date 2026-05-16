@@ -71,7 +71,7 @@ export function UpgradeModal({
             {label} requiere el plan Pro
           </DialogTitle>
           <DialogDescription className="text-center">
-            La memoria técnica con IA, el revisor de cumplimiento y las exportaciones están disponibles a partir del plan Pro.
+            {description ?? "La memoria técnica con IA, el revisor de cumplimiento y las exportaciones están disponibles a partir del plan Pro."}
           </DialogDescription>
         </DialogHeader>
 

@@ -55,11 +55,11 @@ const FEATURE_LABEL: Record<GateKey, string> = {
 };
 
 export function UpgradeModal({
-  open, onClose, feature,
+  open, onClose, feature, description,
 }: {
-  open: boolean; onClose: () => void; feature: GateKey;
+  open: boolean; onClose: () => void; feature: GateKey | string; description?: string;
 }) {
-  const label = FEATURE_LABEL[feature];
+  const label = (feature in FEATURE_LABEL ? FEATURE_LABEL[feature as GateKey] : feature) as string;
   return (
     <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
       <DialogContent className="max-w-[460px]">
@@ -71,7 +71,7 @@ export function UpgradeModal({
             {label} requiere el plan Pro
           </DialogTitle>
           <DialogDescription className="text-center">
-            La memoria técnica con IA, el revisor de cumplimiento y las exportaciones están disponibles a partir del plan Pro.
+            {description ?? "La memoria técnica con IA, el revisor de cumplimiento y las exportaciones están disponibles a partir del plan Pro."}
           </DialogDescription>
         </DialogHeader>
 

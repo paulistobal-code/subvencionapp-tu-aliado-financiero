@@ -29,6 +29,7 @@ import { Route as ApiMemoriaCumplimientoRouteImport } from './routes/api/memoria
 import { Route as ApiExportTipoRouteImport } from './routes/api/export.$tipo'
 import { Route as AppSolicitudIdRouteImport } from './routes/_app.solicitud.$id'
 import { Route as AppConvocatoriasIdRouteImport } from './routes/_app.convocatorias.$id'
+import { Route as ApiPublicCronScrapeBdnsRouteImport } from './routes/api/public/cron/scrape-bdns'
 
 const RegistroRoute = RegistroRouteImport.update({
   id: '/registro',
@@ -129,6 +130,11 @@ const AppConvocatoriasIdRoute = AppConvocatoriasIdRouteImport.update({
   path: '/convocatorias/$id',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiPublicCronScrapeBdnsRoute = ApiPublicCronScrapeBdnsRouteImport.update({
+  id: '/api/public/cron/scrape-bdns',
+  path: '/api/public/cron/scrape-bdns',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -150,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/api/export/$tipo': typeof ApiExportTipoRoute
   '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
   '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
+  '/api/public/cron/scrape-bdns': typeof ApiPublicCronScrapeBdnsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -171,6 +178,7 @@ export interface FileRoutesByTo {
   '/api/export/$tipo': typeof ApiExportTipoRoute
   '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
   '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
+  '/api/public/cron/scrape-bdns': typeof ApiPublicCronScrapeBdnsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -194,6 +202,7 @@ export interface FileRoutesById {
   '/api/export/$tipo': typeof ApiExportTipoRoute
   '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
   '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
+  '/api/public/cron/scrape-bdns': typeof ApiPublicCronScrapeBdnsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -217,6 +226,7 @@ export interface FileRouteTypes {
     | '/api/export/$tipo'
     | '/api/memoria/cumplimiento'
     | '/api/memoria/generar'
+    | '/api/public/cron/scrape-bdns'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -238,6 +248,7 @@ export interface FileRouteTypes {
     | '/api/export/$tipo'
     | '/api/memoria/cumplimiento'
     | '/api/memoria/generar'
+    | '/api/public/cron/scrape-bdns'
   id:
     | '__root__'
     | '/'
@@ -260,6 +271,7 @@ export interface FileRouteTypes {
     | '/api/export/$tipo'
     | '/api/memoria/cumplimiento'
     | '/api/memoria/generar'
+    | '/api/public/cron/scrape-bdns'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -275,6 +287,7 @@ export interface RootRouteChildren {
   ApiExportTipoRoute: typeof ApiExportTipoRoute
   ApiMemoriaCumplimientoRoute: typeof ApiMemoriaCumplimientoRoute
   ApiMemoriaGenerarRoute: typeof ApiMemoriaGenerarRoute
+  ApiPublicCronScrapeBdnsRoute: typeof ApiPublicCronScrapeBdnsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -419,6 +432,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppConvocatoriasIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/public/cron/scrape-bdns': {
+      id: '/api/public/cron/scrape-bdns'
+      path: '/api/public/cron/scrape-bdns'
+      fullPath: '/api/public/cron/scrape-bdns'
+      preLoaderRoute: typeof ApiPublicCronScrapeBdnsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -459,7 +479,18 @@ const rootRouteChildren: RootRouteChildren = {
   ApiExportTipoRoute: ApiExportTipoRoute,
   ApiMemoriaCumplimientoRoute: ApiMemoriaCumplimientoRoute,
   ApiMemoriaGenerarRoute: ApiMemoriaGenerarRoute,
+  ApiPublicCronScrapeBdnsRoute: ApiPublicCronScrapeBdnsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

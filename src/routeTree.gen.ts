@@ -14,6 +14,7 @@ import { Route as PrivacidadRouteImport } from './routes/privacidad'
 import { Route as PreciosRouteImport } from './routes/precios'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as CookiesRouteImport } from './routes/cookies'
+import { Route as ConvocatoriasRouteImport } from './routes/convocatorias'
 import { Route as AvisoLegalRouteImport } from './routes/aviso-legal'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
@@ -28,6 +29,8 @@ import { Route as ApiMemoriaCumplimientoRouteImport } from './routes/api/memoria
 import { Route as ApiExportTipoRouteImport } from './routes/api/export.$tipo'
 import { Route as AppSolicitudIdRouteImport } from './routes/_app.solicitud.$id'
 import { Route as AppConvocatoriasIdRouteImport } from './routes/_app.convocatorias.$id'
+import { Route as ApiPublicCronSeedDemoRouteImport } from './routes/api/public/cron/seed-demo'
+import { Route as ApiPublicCronScrapeBdnsRouteImport } from './routes/api/public/cron/scrape-bdns'
 
 const RegistroRoute = RegistroRouteImport.update({
   id: '/registro',
@@ -52,6 +55,11 @@ const LoginRoute = LoginRouteImport.update({
 const CookiesRoute = CookiesRouteImport.update({
   id: '/cookies',
   path: '/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConvocatoriasRoute = ConvocatoriasRouteImport.update({
+  id: '/convocatorias',
+  path: '/convocatorias',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AvisoLegalRoute = AvisoLegalRouteImport.update({
@@ -123,10 +131,21 @@ const AppConvocatoriasIdRoute = AppConvocatoriasIdRouteImport.update({
   path: '/convocatorias/$id',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiPublicCronSeedDemoRoute = ApiPublicCronSeedDemoRouteImport.update({
+  id: '/api/public/cron/seed-demo',
+  path: '/api/public/cron/seed-demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicCronScrapeBdnsRoute = ApiPublicCronScrapeBdnsRouteImport.update({
+  id: '/api/public/cron/scrape-bdns',
+  path: '/api/public/cron/scrape-bdns',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/aviso-legal': typeof AvisoLegalRoute
+  '/convocatorias': typeof ConvocatoriasRoute
   '/cookies': typeof CookiesRoute
   '/login': typeof LoginRoute
   '/precios': typeof PreciosRoute
@@ -143,10 +162,13 @@ export interface FileRoutesByFullPath {
   '/api/export/$tipo': typeof ApiExportTipoRoute
   '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
   '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
+  '/api/public/cron/scrape-bdns': typeof ApiPublicCronScrapeBdnsRoute
+  '/api/public/cron/seed-demo': typeof ApiPublicCronSeedDemoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/aviso-legal': typeof AvisoLegalRoute
+  '/convocatorias': typeof ConvocatoriasRoute
   '/cookies': typeof CookiesRoute
   '/login': typeof LoginRoute
   '/precios': typeof PreciosRoute
@@ -163,12 +185,15 @@ export interface FileRoutesByTo {
   '/api/export/$tipo': typeof ApiExportTipoRoute
   '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
   '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
+  '/api/public/cron/scrape-bdns': typeof ApiPublicCronScrapeBdnsRoute
+  '/api/public/cron/seed-demo': typeof ApiPublicCronSeedDemoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/aviso-legal': typeof AvisoLegalRoute
+  '/convocatorias': typeof ConvocatoriasRoute
   '/cookies': typeof CookiesRoute
   '/login': typeof LoginRoute
   '/precios': typeof PreciosRoute
@@ -185,12 +210,15 @@ export interface FileRoutesById {
   '/api/export/$tipo': typeof ApiExportTipoRoute
   '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
   '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
+  '/api/public/cron/scrape-bdns': typeof ApiPublicCronScrapeBdnsRoute
+  '/api/public/cron/seed-demo': typeof ApiPublicCronSeedDemoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/aviso-legal'
+    | '/convocatorias'
     | '/cookies'
     | '/login'
     | '/precios'
@@ -207,10 +235,13 @@ export interface FileRouteTypes {
     | '/api/export/$tipo'
     | '/api/memoria/cumplimiento'
     | '/api/memoria/generar'
+    | '/api/public/cron/scrape-bdns'
+    | '/api/public/cron/seed-demo'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/aviso-legal'
+    | '/convocatorias'
     | '/cookies'
     | '/login'
     | '/precios'
@@ -227,11 +258,14 @@ export interface FileRouteTypes {
     | '/api/export/$tipo'
     | '/api/memoria/cumplimiento'
     | '/api/memoria/generar'
+    | '/api/public/cron/scrape-bdns'
+    | '/api/public/cron/seed-demo'
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/aviso-legal'
+    | '/convocatorias'
     | '/cookies'
     | '/login'
     | '/precios'
@@ -248,12 +282,15 @@ export interface FileRouteTypes {
     | '/api/export/$tipo'
     | '/api/memoria/cumplimiento'
     | '/api/memoria/generar'
+    | '/api/public/cron/scrape-bdns'
+    | '/api/public/cron/seed-demo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AvisoLegalRoute: typeof AvisoLegalRoute
+  ConvocatoriasRoute: typeof ConvocatoriasRoute
   CookiesRoute: typeof CookiesRoute
   LoginRoute: typeof LoginRoute
   PreciosRoute: typeof PreciosRoute
@@ -262,6 +299,8 @@ export interface RootRouteChildren {
   ApiExportTipoRoute: typeof ApiExportTipoRoute
   ApiMemoriaCumplimientoRoute: typeof ApiMemoriaCumplimientoRoute
   ApiMemoriaGenerarRoute: typeof ApiMemoriaGenerarRoute
+  ApiPublicCronScrapeBdnsRoute: typeof ApiPublicCronScrapeBdnsRoute
+  ApiPublicCronSeedDemoRoute: typeof ApiPublicCronSeedDemoRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -299,6 +338,13 @@ declare module '@tanstack/react-router' {
       path: '/cookies'
       fullPath: '/cookies'
       preLoaderRoute: typeof CookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/convocatorias': {
+      id: '/convocatorias'
+      path: '/convocatorias'
+      fullPath: '/convocatorias'
+      preLoaderRoute: typeof ConvocatoriasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/aviso-legal': {
@@ -399,6 +445,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppConvocatoriasIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/public/cron/seed-demo': {
+      id: '/api/public/cron/seed-demo'
+      path: '/api/public/cron/seed-demo'
+      fullPath: '/api/public/cron/seed-demo'
+      preLoaderRoute: typeof ApiPublicCronSeedDemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/cron/scrape-bdns': {
+      id: '/api/public/cron/scrape-bdns'
+      path: '/api/public/cron/scrape-bdns'
+      fullPath: '/api/public/cron/scrape-bdns'
+      preLoaderRoute: typeof ApiPublicCronScrapeBdnsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -430,6 +490,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AvisoLegalRoute: AvisoLegalRoute,
+  ConvocatoriasRoute: ConvocatoriasRoute,
   CookiesRoute: CookiesRoute,
   LoginRoute: LoginRoute,
   PreciosRoute: PreciosRoute,
@@ -438,6 +499,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiExportTipoRoute: ApiExportTipoRoute,
   ApiMemoriaCumplimientoRoute: ApiMemoriaCumplimientoRoute,
   ApiMemoriaGenerarRoute: ApiMemoriaGenerarRoute,
+  ApiPublicCronScrapeBdnsRoute: ApiPublicCronScrapeBdnsRoute,
+  ApiPublicCronSeedDemoRoute: ApiPublicCronSeedDemoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -14,6 +14,7 @@ import { Route as PrivacidadRouteImport } from './routes/privacidad'
 import { Route as PreciosRouteImport } from './routes/precios'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as CookiesRouteImport } from './routes/cookies'
+import { Route as ConvocatoriasRouteImport } from './routes/convocatorias'
 import { Route as AvisoLegalRouteImport } from './routes/aviso-legal'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
@@ -52,6 +53,11 @@ const LoginRoute = LoginRouteImport.update({
 const CookiesRoute = CookiesRouteImport.update({
   id: '/cookies',
   path: '/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConvocatoriasRoute = ConvocatoriasRouteImport.update({
+  id: '/convocatorias',
+  path: '/convocatorias',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AvisoLegalRoute = AvisoLegalRouteImport.update({
@@ -127,6 +133,7 @@ const AppConvocatoriasIdRoute = AppConvocatoriasIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/aviso-legal': typeof AvisoLegalRoute
+  '/convocatorias': typeof ConvocatoriasRoute
   '/cookies': typeof CookiesRoute
   '/login': typeof LoginRoute
   '/precios': typeof PreciosRoute
@@ -147,6 +154,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/aviso-legal': typeof AvisoLegalRoute
+  '/convocatorias': typeof ConvocatoriasRoute
   '/cookies': typeof CookiesRoute
   '/login': typeof LoginRoute
   '/precios': typeof PreciosRoute
@@ -169,6 +177,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/aviso-legal': typeof AvisoLegalRoute
+  '/convocatorias': typeof ConvocatoriasRoute
   '/cookies': typeof CookiesRoute
   '/login': typeof LoginRoute
   '/precios': typeof PreciosRoute
@@ -191,6 +200,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/aviso-legal'
+    | '/convocatorias'
     | '/cookies'
     | '/login'
     | '/precios'
@@ -211,6 +221,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/aviso-legal'
+    | '/convocatorias'
     | '/cookies'
     | '/login'
     | '/precios'
@@ -232,6 +243,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/aviso-legal'
+    | '/convocatorias'
     | '/cookies'
     | '/login'
     | '/precios'
@@ -254,6 +266,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AvisoLegalRoute: typeof AvisoLegalRoute
+  ConvocatoriasRoute: typeof ConvocatoriasRoute
   CookiesRoute: typeof CookiesRoute
   LoginRoute: typeof LoginRoute
   PreciosRoute: typeof PreciosRoute
@@ -299,6 +312,13 @@ declare module '@tanstack/react-router' {
       path: '/cookies'
       fullPath: '/cookies'
       preLoaderRoute: typeof CookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/convocatorias': {
+      id: '/convocatorias'
+      path: '/convocatorias'
+      fullPath: '/convocatorias'
+      preLoaderRoute: typeof ConvocatoriasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/aviso-legal': {
@@ -430,6 +450,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AvisoLegalRoute: AvisoLegalRoute,
+  ConvocatoriasRoute: ConvocatoriasRoute,
   CookiesRoute: CookiesRoute,
   LoginRoute: LoginRoute,
   PreciosRoute: PreciosRoute,
@@ -442,3 +463,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

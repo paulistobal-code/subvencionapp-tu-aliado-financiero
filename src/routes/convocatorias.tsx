@@ -67,7 +67,7 @@ function BuscadorPage() {
   const [qLocal, setQLocal] = useState(params.q ?? "");
 
   const setParam = (patch: Partial<SearchParams>) => {
-    navigate({ search: (prev) => ({ ...prev, ...patch }) as SearchParams });
+    navigate({ search: (prev: SearchParams) => ({ ...prev, ...patch }) });
   };
 
   const { data: convocatorias, isLoading } = useQuery({

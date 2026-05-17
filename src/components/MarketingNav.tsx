@@ -16,10 +16,10 @@ export function MarketingNav() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-8 text-sm text-white/70">
-          <a href="#como-funciona" className="hover:text-white transition-colors">Cómo funciona</a>
-          <a href="#programas" className="hover:text-white transition-colors">Programas</a>
-          <a href="#precios" className="hover:text-white transition-colors">Precios</a>
-          <a href="#gestorias" className="hover:text-white transition-colors">Para gestorías</a>
+          <Link to="/convocatorias" className="hover:text-white transition-colors">Buscador</Link>
+          <a href="/#como-funciona" className="hover:text-white transition-colors">Cómo funciona</a>
+          <Link to="/precios" className="hover:text-white transition-colors">Precios</Link>
+          <a href="/#gestorias" className="hover:text-white transition-colors">Para gestorías</a>
         </nav>
 
         <div className="hidden md:flex items-center gap-4">

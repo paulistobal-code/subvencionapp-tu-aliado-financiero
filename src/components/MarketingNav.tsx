@@ -42,10 +42,10 @@ export function MarketingNav() {
 
       {open && (
         <div className="md:hidden absolute top-16 left-0 right-0 border-b border-white/10 px-6 py-6 flex flex-col gap-4" style={{ background: "rgba(8,13,26,0.98)" }}>
-          <a href="#como-funciona" onClick={() => setOpen(false)} className="text-white/80">Cómo funciona</a>
-          <a href="#programas" onClick={() => setOpen(false)} className="text-white/80">Programas</a>
-          <a href="#precios" onClick={() => setOpen(false)} className="text-white/80">Precios</a>
-          <a href="#gestorias" onClick={() => setOpen(false)} className="text-white/80">Para gestorías</a>
+          <Link to="/convocatorias" onClick={() => setOpen(false)} className="text-white/80">Buscador</Link>
+          <a href="/#como-funciona" onClick={() => setOpen(false)} className="text-white/80">Cómo funciona</a>
+          <Link to="/precios" onClick={() => setOpen(false)} className="text-white/80">Precios</Link>
+          <a href="/#gestorias" onClick={() => setOpen(false)} className="text-white/80">Para gestorías</a>
           <hr className="border-white/10" />
           <Link to="/login" className="text-white">Iniciar sesión</Link>
           <Link to="/registro" className="bg-gold text-obsidian font-semibold px-4 py-2.5 rounded-md text-center">

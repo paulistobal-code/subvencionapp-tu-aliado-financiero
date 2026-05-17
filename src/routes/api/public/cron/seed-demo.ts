@@ -10,7 +10,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createClient } from "@supabase/supabase-js";
 
-const DEMO_DATA = [
+const DEMO_DATA: Record<string, unknown>[] = [
   {
     fuente: "KitDigital",
     codigo_bdns: "DEMO-KD-2026-01",

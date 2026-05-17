@@ -29,6 +29,7 @@ import { Route as ApiMemoriaCumplimientoRouteImport } from './routes/api/memoria
 import { Route as ApiExportTipoRouteImport } from './routes/api/export.$tipo'
 import { Route as AppSolicitudIdRouteImport } from './routes/_app.solicitud.$id'
 import { Route as AppConvocatoriasIdRouteImport } from './routes/_app.convocatorias.$id'
+import { Route as ApiPublicCronSeedDemoRouteImport } from './routes/api/public/cron/seed-demo'
 import { Route as ApiPublicCronScrapeBdnsRouteImport } from './routes/api/public/cron/scrape-bdns'
 
 const RegistroRoute = RegistroRouteImport.update({
@@ -130,6 +131,11 @@ const AppConvocatoriasIdRoute = AppConvocatoriasIdRouteImport.update({
   path: '/convocatorias/$id',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiPublicCronSeedDemoRoute = ApiPublicCronSeedDemoRouteImport.update({
+  id: '/api/public/cron/seed-demo',
+  path: '/api/public/cron/seed-demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicCronScrapeBdnsRoute = ApiPublicCronScrapeBdnsRouteImport.update({
   id: '/api/public/cron/scrape-bdns',
   path: '/api/public/cron/scrape-bdns',
@@ -157,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
   '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
   '/api/public/cron/scrape-bdns': typeof ApiPublicCronScrapeBdnsRoute
+  '/api/public/cron/seed-demo': typeof ApiPublicCronSeedDemoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -179,6 +186,7 @@ export interface FileRoutesByTo {
   '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
   '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
   '/api/public/cron/scrape-bdns': typeof ApiPublicCronScrapeBdnsRoute
+  '/api/public/cron/seed-demo': typeof ApiPublicCronSeedDemoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -203,6 +211,7 @@ export interface FileRoutesById {
   '/api/memoria/cumplimiento': typeof ApiMemoriaCumplimientoRoute
   '/api/memoria/generar': typeof ApiMemoriaGenerarRoute
   '/api/public/cron/scrape-bdns': typeof ApiPublicCronScrapeBdnsRoute
+  '/api/public/cron/seed-demo': typeof ApiPublicCronSeedDemoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -227,6 +236,7 @@ export interface FileRouteTypes {
     | '/api/memoria/cumplimiento'
     | '/api/memoria/generar'
     | '/api/public/cron/scrape-bdns'
+    | '/api/public/cron/seed-demo'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -249,6 +259,7 @@ export interface FileRouteTypes {
     | '/api/memoria/cumplimiento'
     | '/api/memoria/generar'
     | '/api/public/cron/scrape-bdns'
+    | '/api/public/cron/seed-demo'
   id:
     | '__root__'
     | '/'
@@ -272,6 +283,7 @@ export interface FileRouteTypes {
     | '/api/memoria/cumplimiento'
     | '/api/memoria/generar'
     | '/api/public/cron/scrape-bdns'
+    | '/api/public/cron/seed-demo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -288,6 +300,7 @@ export interface RootRouteChildren {
   ApiMemoriaCumplimientoRoute: typeof ApiMemoriaCumplimientoRoute
   ApiMemoriaGenerarRoute: typeof ApiMemoriaGenerarRoute
   ApiPublicCronScrapeBdnsRoute: typeof ApiPublicCronScrapeBdnsRoute
+  ApiPublicCronSeedDemoRoute: typeof ApiPublicCronSeedDemoRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -432,6 +445,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppConvocatoriasIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/public/cron/seed-demo': {
+      id: '/api/public/cron/seed-demo'
+      path: '/api/public/cron/seed-demo'
+      fullPath: '/api/public/cron/seed-demo'
+      preLoaderRoute: typeof ApiPublicCronSeedDemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/cron/scrape-bdns': {
       id: '/api/public/cron/scrape-bdns'
       path: '/api/public/cron/scrape-bdns'
@@ -480,6 +500,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiMemoriaCumplimientoRoute: ApiMemoriaCumplimientoRoute,
   ApiMemoriaGenerarRoute: ApiMemoriaGenerarRoute,
   ApiPublicCronScrapeBdnsRoute: ApiPublicCronScrapeBdnsRoute,
+  ApiPublicCronSeedDemoRoute: ApiPublicCronSeedDemoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

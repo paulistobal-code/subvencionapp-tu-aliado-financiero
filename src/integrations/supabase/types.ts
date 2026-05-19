@@ -19,6 +19,8 @@ export type Database = {
           alertas_cumplimiento: Json | null
           convocatoria_id: string | null
           created_at: string | null
+          departamento_id: string | null
+          departamento_label: string | null
           estado: string | null
           id: string
           org_id: string | null
@@ -31,6 +33,8 @@ export type Database = {
           alertas_cumplimiento?: Json | null
           convocatoria_id?: string | null
           created_at?: string | null
+          departamento_id?: string | null
+          departamento_label?: string | null
           estado?: string | null
           id?: string
           org_id?: string | null
@@ -43,6 +47,8 @@ export type Database = {
           alertas_cumplimiento?: Json | null
           convocatoria_id?: string | null
           created_at?: string | null
+          departamento_id?: string | null
+          departamento_label?: string | null
           estado?: string | null
           id?: string
           org_id?: string | null
@@ -57,6 +63,13 @@ export type Database = {
             columns: ["convocatoria_id"]
             isOneToOne: false
             referencedRelation: "convocatorias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "borradores_departamento_id_fkey"
+            columns: ["departamento_id"]
+            isOneToOne: false
+            referencedRelation: "departamentos"
             referencedColumns: ["id"]
           },
           {
@@ -279,6 +292,56 @@ export type Database = {
           },
         ]
       }
+      departamentos: {
+        Row: {
+          activo: boolean | null
+          created_at: string | null
+          id: string
+          nombre: string
+          notas: string | null
+          org_id: string | null
+          responsable_email: string | null
+          responsable_nombre: string | null
+          sector_especifico: string[] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          activo?: boolean | null
+          created_at?: string | null
+          id?: string
+          nombre: string
+          notas?: string | null
+          org_id?: string | null
+          responsable_email?: string | null
+          responsable_nombre?: string | null
+          sector_especifico?: string[] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          activo?: boolean | null
+          created_at?: string | null
+          id?: string
+          nombre?: string
+          notas?: string | null
+          org_id?: string | null
+          responsable_email?: string | null
+          responsable_nombre?: string | null
+          sector_especifico?: string[] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "departamentos_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organisations: {
         Row: {
           actividad_descripcion: string | null
@@ -476,10 +539,74 @@ export type Database = {
           titulo: string
         }[]
       }
+      buscar_por_texto: {
+        Args: {
+          p_comunidad?: string
+          p_desde?: string
+          p_keywords: string[]
+          p_limite?: number
+        }
+        Returns: {
+          comunidades: string[]
+          fecha_fin: string
+          fuente: string
+          id: string
+          importe_maximo: number
+          organismo: string
+          tipos_beneficiario: string[]
+          titulo: string
+        }[]
+      }
       calcular_completitud: { Args: { p_org_id: string }; Returns: number }
+      get_convocatoria_detail: {
+        Args: { p_convocatoria_id: string; p_user_id?: string }
+        Returns: Json
+      }
+      get_or_create_borrador: {
+        Args: {
+          p_convocatoria_id: string
+          p_departamento_id?: string
+          p_org_id: string
+          p_user_id: string
+        }
+        Returns: string
+      }
+      get_user_stats: { Args: { p_user_id: string }; Returns: Json }
+      grant_por_solicitud_access: {
+        Args: { p_convocatoria_id: string; p_user_id: string }
+        Returns: undefined
+      }
       reset_contadores_mensuales: { Args: never; Returns: undefined }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
+      update_borrador_seccion: {
+        Args: {
+          p_borrador_id: string
+          p_contenido: string
+          p_seccion: string
+          p_user_id: string
+        }
+        Returns: Json
+      }
+      update_subscription_from_stripe: {
+        Args: {
+          p_estado: string
+          p_facturacion_anual?: boolean
+          p_periodo_fin: string
+          p_plan: string
+          p_stripe_customer_id: string
+          p_stripe_subscription_id: string
+        }
+        Returns: undefined
+      }
+      verificar_elegibilidad: {
+        Args: { p_convocatoria_id: string; p_org_id: string }
+        Returns: {
+          criterio: string
+          cumple: string
+          explicacion: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
